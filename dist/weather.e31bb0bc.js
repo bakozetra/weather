@@ -33899,8 +33899,9 @@ function ContextProvider({
     value: {
       setNameCountry,
       nameCountry,
-      weather,
-      setWeather
+      name,
+      setName,
+      fetchData
     }
   }, children);
 }
@@ -33923,17 +33924,32 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 const CountryName = () => {
   const {
     setNameCountry,
-    nameCountry
+    nameCountry,
+    setName,
+    fetchData
   } = (0, _react.useContext)(_Context.Context);
   console.log(nameCountry);
   console.log("hello");
   console.log(nameCountry.consolidated_weather?.[0].humidity);
   console.log("hello");
   const [input, setInput] = (0, _react.useState)("");
-  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("input", {
+  const [isLogging, setIsLogging] = (0, _react.useState)(false);
+
+  function SubmitButton(e) {
+    e.preventDefault();
+    setName(input);
+    fetchData();
+  }
+
+  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("button", {
+    placeholder: "Search for a place",
+    onClick: () => setIsLogging(!isLogging)
+  }, "Search for a place"), isLogging && /*#__PURE__*/_react.default.createElement("form", null, /*#__PURE__*/_react.default.createElement("input", {
     value: input,
     onChange: e => setInput(e.target.value)
-  }), /*#__PURE__*/_react.default.createElement("button", null, "Search"), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("h2", null, nameCountry.title))), /*#__PURE__*/_react.default.createElement("div", null, nameCountry.consolidated_weather?.slice().map(degree => {
+  }), /*#__PURE__*/_react.default.createElement("button", {
+    onClick: SubmitButton
+  }, "Search")), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("h2", null, nameCountry.title))), /*#__PURE__*/_react.default.createElement("div", null, nameCountry.consolidated_weather?.slice().map(degree => {
     var mydate = new Date(degree.applicable_date);
     const dates = mydate.toDateString();
     return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("p", null, degree.weather_state_name), /*#__PURE__*/_react.default.createElement("img", {
@@ -34081,7 +34097,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59940" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56919" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

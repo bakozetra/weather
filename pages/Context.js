@@ -3,7 +3,7 @@ import React, { createContext , useState , useEffect} from 'react'
 const Context = createContext();
 const URL = `https://cors-anywhere.herokuapp.com/https://www.metaweather.com/api/location/search/?query=`
 
-function ContextProvider({ children}) {
+function ContextProvider({children}) {
   const [nameCountry, setNameCountry] = useState([]);
   const [weather , setWeather] = useState([]);
   const [name, setName] = useState("london");
@@ -22,8 +22,8 @@ function ContextProvider({ children}) {
     fetchData()
   }, [])
 
-  return <Context.Provider value = {{setNameCountry , nameCountry , weather , setWeather}}>
+  return <Context.Provider value = {{setNameCountry , nameCountry , name , setName , fetchData}}>
     {children}
   </Context.Provider>
 }
-export { Context, ContextProvider }
+export { Context, ContextProvider}

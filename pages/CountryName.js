@@ -2,23 +2,37 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Context } from './Context'
 
 const CountryName = () => {
-  const { setNameCountry, nameCountry} = useContext(Context);
+  const { setNameCountry, nameCountry , setName , fetchData } = useContext(Context);
   console.log(nameCountry);
   console.log("hello");
   console.log(nameCountry.consolidated_weather?.[0].humidity);
   console.log("hello");
   const [input, setInput] = useState("")
+  const [isLogging, setIsLogging] = useState(false);
+   
+   function SubmitButton (e) {
+     e.preventDefault();
+     setName(input);
+     fetchData();
+   } 
 
   return (
     <div>
       <div>
-      <input
-        value={input}
-        onChange={(e) => setInput(e.target.value)} />
-      <button>Search</button>
-      <div>
-        <h2>{nameCountry.title}</h2>
-      </div>
+        <button placeholder="Search for a place"
+          onClick={() => setIsLogging(!isLogging)}
+        >Search for a place</button>
+        {isLogging && (
+          <form>
+            <input
+              value={input}
+              onChange={(e) => setInput(e.target.value)} />
+            <button onClick={SubmitButton}>Search</button>
+          </form>
+        )}
+        <div>
+          <h2>{nameCountry.title}</h2>
+        </div>
       </div>
       <div>
         {
@@ -27,10 +41,10 @@ const CountryName = () => {
             const dates = mydate.toDateString();
             return <div>
               <p>{degree.weather_state_name}</p>
-              <img src={`https://www.metaweather.com/static/img/weather/${degree.weather_state_abbr}.svg`}/>
+              <img src={`https://www.metaweather.com/static/img/weather/${degree.weather_state_abbr}.svg`} />
               <p>{dates}</p>
             </div>
-          })         
+          })
         }
       </div>
       <div>
