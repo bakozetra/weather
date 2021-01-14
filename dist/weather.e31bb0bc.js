@@ -33923,17 +33923,16 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 const CountryName = () => {
   const {
-    setNameCountry,
     nameCountry,
     setName,
     fetchData
   } = (0, _react.useContext)(_Context.Context);
   console.log(nameCountry);
-  console.log("hello");
   console.log(nameCountry.consolidated_weather?.[0].humidity);
-  console.log("hello");
   const [input, setInput] = (0, _react.useState)("");
   const [isLogging, setIsLogging] = (0, _react.useState)(false);
+  const [nextDay, setNextDay] = (0, _react.useState)();
+  const [temp, setTemp] = (0, _react.useState)(false);
 
   function SubmitButton(e) {
     e.preventDefault();
@@ -33941,21 +33940,37 @@ const CountryName = () => {
     fetchData();
   }
 
+  function WeatherNextDay(id) {
+    console.log(id);
+    const newDay = nameCountry.consolidated_weather?.filter(weahterId => weahterId === id);
+    console.log(newDay);
+    setNextDay(newDay);
+  }
+
+  console.log(nextDay);
+  var dateToday = new Date(nameCountry.consolidated_weather?.[0].applicable_date);
+  const showDate = dateToday.toDateString();
   return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("button", {
     placeholder: "Search for a place",
     onClick: () => setIsLogging(!isLogging)
-  }, "Search for a place"), isLogging && /*#__PURE__*/_react.default.createElement("form", null, /*#__PURE__*/_react.default.createElement("input", {
+  }, "Search for a place"), /*#__PURE__*/_react.default.createElement("button", null, "F"), /*#__PURE__*/_react.default.createElement("button", null, "C"), isLogging && /*#__PURE__*/_react.default.createElement("form", null, /*#__PURE__*/_react.default.createElement("input", {
     value: input,
     onChange: e => setInput(e.target.value)
   }), /*#__PURE__*/_react.default.createElement("button", {
     onClick: SubmitButton
-  }, "Search")), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("h2", null, nameCountry.title))), /*#__PURE__*/_react.default.createElement("div", null, nameCountry.consolidated_weather?.slice().map(degree => {
+  }, "Search")), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("h2", null, nameCountry.title))), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("p", null, nameCountry.consolidated_weather?.[0].weather_state_name), /*#__PURE__*/_react.default.createElement("p", null, showDate), /*#__PURE__*/_react.default.createElement("img", {
+    src: `https://www.metaweather.com/static/img/weather/${nameCountry.consolidated_weather?.[0].weather_state_abbr}.svg`
+  }), /*#__PURE__*/_react.default.createElement("p", null, nameCountry.consolidated_weather?.[0].the_temp, '\u00b0'), /*#__PURE__*/_react.default.createElement("p", null, showDate)), /*#__PURE__*/_react.default.createElement("div", {
+    className: "weather"
+  }, nameCountry.consolidated_weather?.slice(1).map(degree => {
     var mydate = new Date(degree.applicable_date);
     const dates = mydate.toDateString();
-    return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("p", null, degree.weather_state_name), /*#__PURE__*/_react.default.createElement("img", {
+    return /*#__PURE__*/_react.default.createElement("div", {
+      onClick: () => WeatherNextDay(degree.id)
+    }, /*#__PURE__*/_react.default.createElement("p", null, dates), /*#__PURE__*/_react.default.createElement("img", {
       src: `https://www.metaweather.com/static/img/weather/${degree.weather_state_abbr}.svg`
-    }), /*#__PURE__*/_react.default.createElement("p", null, dates));
-  })), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("article", null, /*#__PURE__*/_react.default.createElement("p", null, "Wind status"), /*#__PURE__*/_react.default.createElement("p", null, Math.round(nameCountry.consolidated_weather?.[0].wind_speed), " mph")), /*#__PURE__*/_react.default.createElement("article", null, /*#__PURE__*/_react.default.createElement("p", null, "Humidity"), /*#__PURE__*/_react.default.createElement("p", null, Math.round(nameCountry.consolidated_weather?.[0].humidity))), /*#__PURE__*/_react.default.createElement("article", null, /*#__PURE__*/_react.default.createElement("p", null, "Visibility"), /*#__PURE__*/_react.default.createElement("p", null, Math.round(nameCountry.consolidated_weather?.[0].visibility), " miles")), /*#__PURE__*/_react.default.createElement("article", null, /*#__PURE__*/_react.default.createElement("p", null, "Air pressure"), /*#__PURE__*/_react.default.createElement("p", null, Math.round(nameCountry.consolidated_weather?.[0].air_pressure), "mb"))));
+    }), /*#__PURE__*/_react.default.createElement("div", null));
+  })), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("article", null, /*#__PURE__*/_react.default.createElement("p", null, "Wind status"), /*#__PURE__*/_react.default.createElement("p", null, nextDay), /*#__PURE__*/_react.default.createElement("p", null, Math.round(nameCountry.consolidated_weather?.[0].wind_speed), " mph")), /*#__PURE__*/_react.default.createElement("article", null, /*#__PURE__*/_react.default.createElement("p", null, "Humidity"), /*#__PURE__*/_react.default.createElement("p", null, Math.round(nameCountry.consolidated_weather?.[0].humidity))), /*#__PURE__*/_react.default.createElement("article", null, /*#__PURE__*/_react.default.createElement("p", null, "Visibility"), /*#__PURE__*/_react.default.createElement("p", null, Math.round(nameCountry.consolidated_weather?.[0].visibility), " miles")), /*#__PURE__*/_react.default.createElement("article", null, /*#__PURE__*/_react.default.createElement("p", null, "Air pressure"), /*#__PURE__*/_react.default.createElement("p", null, Math.round(nameCountry.consolidated_weather?.[0].air_pressure), "mb"))));
 };
 
 var _default = CountryName;
@@ -34097,7 +34112,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56919" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62856" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
