@@ -25,8 +25,8 @@ const CountryName = () => {
    var dateToday = new Date(nameCountry.consolidated_weather?.[0].applicable_date);
    const showDate = dateToday.toDateString();
   return (
-    <div>
-      <div>
+    <div className ="container">
+      <div className= "dayToday" >
         <button placeholder="Search for a place"
           onClick={() => setIsLogging(!isLogging)}
         >Search for a place</button>
@@ -43,8 +43,6 @@ const CountryName = () => {
         <div>
           <h2>{nameCountry.title}</h2>
         </div>
-      </div>
-      <div>
         <p>{nameCountry.consolidated_weather?.[0].weather_state_name}</p>
         <p>{showDate}</p>
         <img src={`https://www.metaweather.com/static/img/weather/${nameCountry.consolidated_weather?.[0].weather_state_abbr}.svg`} />
@@ -52,6 +50,7 @@ const CountryName = () => {
         <p>{showDate}</p>
       </div>
       <div className = "weather">
+        <div className="dayWeather">
         {
           nameCountry.consolidated_weather?.slice(1).map(degree => {
             var mydate = new Date(degree.applicable_date);
@@ -65,7 +64,7 @@ const CountryName = () => {
           })
         }
       </div>
-      <div>
+      <div className="WeatherDetail">
         <article>
           <p>Wind status</p>
           <p>{nextDay}</p>
@@ -83,6 +82,7 @@ const CountryName = () => {
           <p>Air pressure</p>
           <p>{Math.round(nameCountry.consolidated_weather?.[0].air_pressure)}mb</p>
         </article>
+      </div>
       </div>
     </div>
   )

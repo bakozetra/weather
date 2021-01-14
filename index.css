@@ -1,6 +1,8 @@
 body {
-  background: #100E1D;
   color: white;
+  background: #100e1d;
+  width: 100%;
+  margin: 0;
 }
 img {
   width: 100px;
@@ -11,8 +13,55 @@ img {
 } */
 .weather {
   display: flex;
-  width: 50%;
-  margin-left: auto;
-  margin-right: auto;
-  gap : 20px;
+  flex-direction: column;
+  gap: 2rem;
+}
+.dayWeather div  {
+  width: 120px;
+  height: 177px;
+  background: #1e213a;
+  display: flex;
+  flex-direction: column;
+  line-height: 2rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  display: grid;
+  grid-template-areas:
+    "today nextDay"
+    "today nextDay"
+    "today nextDay";
+  gap: 154px;
+}
+.search {
+  grid-area: search;
+  background: #1E213A;
+}
+.dayToday {
+  grid-area: today;
+  background: #1E213A;
+  width: 459px;
+  height: 600px;
+
+}
+.weather {
+  grid-area: nextDay;
+  background: #100e1d;
+}
+.dayWeather {
+  display: flex;
+  gap: 47px;
+}
+.WeatherDetail {
+  grid-area: detail;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  background: #100e1d;
+}
+.WeatherDetail article {
+  width: 290px;
+  background: #1e213a;
 }
