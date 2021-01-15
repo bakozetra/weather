@@ -5,10 +5,11 @@ const URL = `https://cors-anywhere.herokuapp.com/https://www.metaweather.com/api
 
 function ContextProvider({children}) {
   const [nameCountry, setNameCountry] = useState([]);
-  const [weather , setWeather] = useState([]);
+  const [city , setCity] = useState([]);
   const [name, setName] = useState("london");
-  const Api = `${URL}${name}`;
-  const fetchData = async () => {
+  
+  const fetchData = async (country) => {
+    const Api = `${URL}${country}`;
     const res = await fetch(Api);
     const data = await res.json();
     setNameCountry(data);
@@ -18,11 +19,20 @@ function ContextProvider({children}) {
       setNameCountry(allData);
     }
   }
+  const fetchApi = async (input) => {
+    const API = `${URL}${input}`
+    const res = await fetch(API);
+    const data = await res.json();
+    setCity(data);
+    console.log(data);
+  }
+  console.log(city);
   useEffect(() => {
-    fetchData()
+    fetchData(name)
+    fetchApi()
   }, [])
 
-  return <Context.Provider value = {{setNameCountry , nameCountry , name , setName , fetchData}}>
+  return <Context.Provider value = {{setNameCountry , nameCountry , name , setName , fetchData , city , setCity , fetchApi}}>
     {children}
   </Context.Provider>
 }

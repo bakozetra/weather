@@ -1,43 +1,75 @@
-import React, { useContext , useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Context } from './Context'
+import WeatherDetail from "../component/Weather"
+import OtherWeather from '../component/OtherWeather';
 
 const CountryName = () => {
-  const {nameCountry , setName , fetchData } = useContext(Context);
-  console.log(nameCountry);
-  console.log(nameCountry.consolidated_weather?.[0].humidity);
+  const { nameCountry, setName, fetchData , fetchApi , city , name} = useContext(Context);
   const [input, setInput] = useState("")
   const [isLogging, setIsLogging] = useState(false);
-  const [nextDay , setNextDay] = useState();
-  const [temp , setTemp] = useState(false);
-   function SubmitButton (e) {
-     e.preventDefault();
-     setName(input);
-     fetchData();
-   } 
-   function WeatherNextDay(id) {
-     console.log(id);
-     const newDay = nameCountry.consolidated_weather?.filter( weahterId => weahterId === id)
-     console.log(newDay);
-     setNextDay(newDay);
-   }
+  const [celcuis , setCelcuis] = useState(nameCountry.consolidated_weather?.[0].the_temp);
+  console.log(name);
+  function Submit (e) {
+    e.preventDefault()
+    fetchApi(input);
+  }
 
-   console.log(nextDay);
-   var dateToday = new Date(nameCountry.consolidated_weather?.[0].applicable_date);
-   const showDate = dateToday.toDateString();
+  function SubmitButton(e) {
+    console.log(e.target.id);
+    e.preventDefault();
+    setName(e.target.id);
+    console.log(name);
+    fetchData(e.target.id);
+  }
+  
+function temperatureCelcuis (e) {
+ setCelcuis(e.target.value)
+}
+function temperatureFin (e) {
+  console.log(e.target.value);
+  const formula =((e.target.value) * 9 / 5) + 32;
+  console.log(formula);
+ setCelcuis(formula)
+  
+}
+
+  
+  var dateToday = new Date(nameCountry.consolidated_weather?.[0].applicable_date);
+  const showDate = dateToday.toDateString();
   return (
-    <div className ="container">
-      <div className= "dayToday" >
+    <div className="container">
+      <div>
+        {
+          city?.map(i => {
+            return (
+              <form>
+                <button id={i.title} onClick={SubmitButton}>{i.title}</button>
+              </form>
+            )
+          })
+        }
+
+      </div>
+      <div>
+        <button
+        value={nameCountry.consolidated_weather?.[0].the_temp}
+        onClick={temperatureFin}
+        > F</button>
+        <button
+        value={nameCountry.consolidated_weather?.[0].the_temp}
+        onClick={temperatureCelcuis}
+        >C</button>
+      </div>
+      <div className="dayToday">
         <button placeholder="Search for a place"
           onClick={() => setIsLogging(!isLogging)}
         >Search for a place</button>
-        <button>F</button>
-        <button>C</button>
         {isLogging && (
           <form>
             <input
               value={input}
               onChange={(e) => setInput(e.target.value)} />
-            <button onClick={SubmitButton}>Search</button>
+            <button onClick={Submit}>Search</button>
           </form>
         )}
         <div>
@@ -46,43 +78,12 @@ const CountryName = () => {
         <p>{nameCountry.consolidated_weather?.[0].weather_state_name}</p>
         <p>{showDate}</p>
         <img src={`https://www.metaweather.com/static/img/weather/${nameCountry.consolidated_weather?.[0].weather_state_abbr}.svg`} />
-        <p>{nameCountry.consolidated_weather?.[0].the_temp}{'\u00b0'}</p>
+        <p>{celcuis}{'\u00b0'}</p>
         <p>{showDate}</p>
       </div>
-      <div className = "weather">
-        <div className="dayWeather">
-        {
-          nameCountry.consolidated_weather?.slice(1).map(degree => {
-            var mydate = new Date(degree.applicable_date);
-            const dates = mydate.toDateString();
-            return <div onClick= {() => WeatherNextDay(degree.id)}>
-              <p>{dates}</p>
-              <img src={`https://www.metaweather.com/static/img/weather/${degree.weather_state_abbr}.svg`} />
-              <div>
-              </div>
-            </div>
-          })
-        }
-      </div>
-      <div className="WeatherDetail">
-        <article>
-          <p>Wind status</p>
-          <p>{nextDay}</p>
-          <p>{Math.round(nameCountry.consolidated_weather?.[0].wind_speed)} mph</p>
-        </article>
-        <article>
-          <p>Humidity</p>
-          <p>{Math.round(nameCountry.consolidated_weather?.[0].humidity)}</p>
-        </article>
-        <article>
-          <p>Visibility</p>
-          <p>{Math.round(nameCountry.consolidated_weather?.[0].visibility)} miles</p>
-        </article>
-        <article>
-          <p>Air pressure</p>
-          <p>{Math.round(nameCountry.consolidated_weather?.[0].air_pressure)}mb</p>
-        </article>
-      </div>
+      <div className="weather">
+        <OtherWeather />
+        <WeatherDetail />
       </div>
     </div>
   )

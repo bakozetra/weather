@@ -4,7 +4,6 @@ import CountryName from './pages/CountryName'
 function App() {
  return (
    <div>
-     <h1> Onja Weather App</h1>
      <Switch>
        <Route>
          <CountryName/>

@@ -7,16 +7,12 @@ body {
 img {
   width: 100px;
 }
-/* div {
-  background: #1E213A;
-
-} */
 .weather {
   display: flex;
   flex-direction: column;
   gap: 2rem;
 }
-.dayWeather div  {
+.dayWeather div {
   width: 120px;
   height: 177px;
   background: #1e213a;
@@ -28,27 +24,27 @@ img {
 }
 
 .container {
-  display: grid;
-  grid-template-areas:
-    "today nextDay"
-    "today nextDay"
-    "today nextDay";
-  gap: 154px;
+  display: flex;
+  flex-direction: column;
 }
 .search {
   grid-area: search;
-  background: #1E213A;
+  background: #1e213a;
 }
 .dayToday {
-  grid-area: today;
-  background: #1E213A;
-  width: 459px;
+  background: #1e213a;
+  width: 40%;
   height: 600px;
-
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 .weather {
   grid-area: nextDay;
   background: #100e1d;
+  width: 60%;
+  margin-left: 2rem;
 }
 .dayWeather {
   display: flex;
@@ -65,6 +61,28 @@ img {
   width: 290px;
   background: #1e213a;
 }
+article p {
+  font-size: 16px;
+}
+article p + p {
+  color: #e7e7eb;
+  font-size: 50px;
+
+}
+article {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+
+@media (min-width: 700px) {
+  .container {
+    display: flex;
+    flex-direction:row;
+  }
+  }
 
 
 /*# sourceMappingURL=/weather.9ad09f98.css.map */
