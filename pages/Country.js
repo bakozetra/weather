@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 function Country(city) {
-  
+  const [updateCity , setUpdateCity] = useState(""); 
   const cityName = {
+    title = "",
     
   }
+  setUpdateCity(cityName)
   }
  
   return (

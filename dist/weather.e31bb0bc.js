@@ -33965,18 +33965,25 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-function OtherWeather() {
+function OtherWeather({
+  isFahrentheint
+}) {
   const {
     nameCountry
   } = (0, _react.useContext)(_Context.Context);
   return /*#__PURE__*/_react.default.createElement("div", {
     className: "dayWeather"
   }, nameCountry.consolidated_weather?.slice(1).map(degree => {
+    console.log(degree);
     var mydate = new Date(degree.applicable_date);
     const dates = mydate.toDateString();
     return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("p", null, dates), /*#__PURE__*/_react.default.createElement("img", {
       src: `https://www.metaweather.com/static/img/weather/${degree.weather_state_abbr}.svg`
-    }), /*#__PURE__*/_react.default.createElement("div", null));
+    }), /*#__PURE__*/_react.default.createElement("div", null, isFahrentheint ? /*#__PURE__*/_react.default.createElement("div", {
+      id: "temp"
+    }, /*#__PURE__*/_react.default.createElement("p", null, Math.round(degree.max_temp) * 9 / 5 + 32, '\u00b0', " F"), /*#__PURE__*/_react.default.createElement("p", null, Math.round(degree.min_temp) * 9 / 5 + 32, '\u00b0', " F")) : /*#__PURE__*/_react.default.createElement("div", {
+      id: "temp"
+    }, /*#__PURE__*/_react.default.createElement("p", null, Math.round(degree.max_temp), '\u00b0', "C"), /*#__PURE__*/_react.default.createElement("p", null, Math.round(degree.min_temp), '\u00b0', " C"))), /*#__PURE__*/_react.default.createElement("div", null));
   }));
 }
 
@@ -34015,8 +34022,7 @@ const CountryName = () => {
   } = (0, _react.useContext)(_Context.Context);
   const [input, setInput] = (0, _react.useState)("");
   const [isLogging, setIsLogging] = (0, _react.useState)(false);
-  const [celcuis, setCelcuis] = (0, _react.useState)(nameCountry.consolidated_weather?.[0].the_temp);
-  console.log(name);
+  const [isFahrentheint, setFahren] = (0, _react.useState)(false);
 
   function Submit(e) {
     e.preventDefault();
@@ -34031,17 +34037,6 @@ const CountryName = () => {
     fetchData(e.target.id);
   }
 
-  function temperatureCelcuis(e) {
-    setCelcuis(e.target.value);
-  }
-
-  function temperatureFin(e) {
-    console.log(e.target.value);
-    const formula = e.target.value * 9 / 5 + 32;
-    console.log(formula);
-    setCelcuis(formula);
-  }
-
   var dateToday = new Date(nameCountry.consolidated_weather?.[0].applicable_date);
   const showDate = dateToday.toDateString();
   return /*#__PURE__*/_react.default.createElement("div", {
@@ -34051,12 +34046,12 @@ const CountryName = () => {
       id: i.title,
       onClick: SubmitButton
     }, i.title));
-  })), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("button", {
-    value: nameCountry.consolidated_weather?.[0].the_temp,
-    onClick: temperatureFin
-  }, " F"), /*#__PURE__*/_react.default.createElement("button", {
-    value: nameCountry.consolidated_weather?.[0].the_temp,
-    onClick: temperatureCelcuis
+  })), /*#__PURE__*/_react.default.createElement("div", {
+    className: "covert"
+  }, /*#__PURE__*/_react.default.createElement("button", {
+    onClick: () => setFahren(true)
+  }, "F"), /*#__PURE__*/_react.default.createElement("button", {
+    onClick: () => setFahren(false)
   }, "C")), /*#__PURE__*/_react.default.createElement("div", {
     className: "dayToday"
   }, /*#__PURE__*/_react.default.createElement("button", {
@@ -34069,9 +34064,11 @@ const CountryName = () => {
     onClick: Submit
   }, "Search")), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("h2", null, nameCountry.title)), /*#__PURE__*/_react.default.createElement("p", null, nameCountry.consolidated_weather?.[0].weather_state_name), /*#__PURE__*/_react.default.createElement("p", null, showDate), /*#__PURE__*/_react.default.createElement("img", {
     src: `https://www.metaweather.com/static/img/weather/${nameCountry.consolidated_weather?.[0].weather_state_abbr}.svg`
-  }), /*#__PURE__*/_react.default.createElement("p", null, celcuis, '\u00b0'), /*#__PURE__*/_react.default.createElement("p", null, showDate)), /*#__PURE__*/_react.default.createElement("div", {
+  }), isFahrentheint ? /*#__PURE__*/_react.default.createElement("p", null, Math.round(nameCountry.consolidated_weather?.[0].the_temp) * 9 / 5 + 32, '\u00b0', "F") : /*#__PURE__*/_react.default.createElement("p", null, Math.round(nameCountry.consolidated_weather?.[0].the_temp), '\u00b0', "C"), /*#__PURE__*/_react.default.createElement("p", null, showDate)), /*#__PURE__*/_react.default.createElement("div", {
     className: "weather"
-  }, /*#__PURE__*/_react.default.createElement(_OtherWeather.default, null), /*#__PURE__*/_react.default.createElement(_Weather.default, null)));
+  }, /*#__PURE__*/_react.default.createElement(_OtherWeather.default, {
+    isFahrentheint: isFahrentheint
+  }), /*#__PURE__*/_react.default.createElement(_Weather.default, null)));
 };
 
 var _default = CountryName;
@@ -34213,7 +34210,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62040" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57295" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

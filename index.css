@@ -7,6 +7,7 @@ body {
 img {
   width: 100px;
 }
+
 .weather {
   display: flex;
   flex-direction: column;
@@ -21,6 +22,17 @@ img {
   line-height: 2rem;
   justify-content: center;
   align-items: center;
+}
+#temp {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+.covert {
+  position: absolute;
+  top: 1rem;
+  right: 2rem;
 }
 
 .container {
@@ -49,6 +61,7 @@ img {
 .dayWeather {
   display: flex;
   gap: 47px;
+  flex-wrap: wrap;
 }
 .WeatherDetail {
   grid-area: detail;
@@ -76,10 +89,19 @@ article {
   justify-content: center;
 }
 
+#root {
+  padding-top: 4rem;
+}
+
 
 @media (min-width: 700px) {
   .container {
     display: flex;
     flex-direction:row;
+  }
+  .dayWeather {
+    display: flex;
+    gap: 15px;
+    flex-wrap: nowrap;
   }
   }

@@ -7,8 +7,7 @@ const CountryName = () => {
   const { nameCountry, setName, fetchData , fetchApi , city , name} = useContext(Context);
   const [input, setInput] = useState("")
   const [isLogging, setIsLogging] = useState(false);
-  const [celcuis , setCelcuis] = useState(nameCountry.consolidated_weather?.[0].the_temp);
-  console.log(name);
+  const [isFahrentheint , setFahren] = useState(false);
   function Submit (e) {
     e.preventDefault()
     fetchApi(input);
@@ -21,19 +20,7 @@ const CountryName = () => {
     console.log(name);
     fetchData(e.target.id);
   }
-  
-function temperatureCelcuis (e) {
- setCelcuis(e.target.value)
-}
-function temperatureFin (e) {
-  console.log(e.target.value);
-  const formula =((e.target.value) * 9 / 5) + 32;
-  console.log(formula);
- setCelcuis(formula)
-  
-}
-
-  
+ 
   var dateToday = new Date(nameCountry.consolidated_weather?.[0].applicable_date);
   const showDate = dateToday.toDateString();
   return (
@@ -50,19 +37,13 @@ function temperatureFin (e) {
         }
 
       </div>
-      <div>
-        <button
-        value={nameCountry.consolidated_weather?.[0].the_temp}
-        onClick={temperatureFin}
-        > F</button>
-        <button
-        value={nameCountry.consolidated_weather?.[0].the_temp}
-        onClick={temperatureCelcuis}
-        >C</button>
+      <div className ="covert">
+        <button  onClick={() => setFahren(true)}>F</button>
+        <button  onClick={() => setFahren(false)}>C</button>
       </div>
       <div className="dayToday">
         <button placeholder="Search for a place"
-          onClick={() => setIsLogging(!isLogging)}
+         onClick={() => setIsLogging(!isLogging)}
         >Search for a place</button>
         {isLogging && (
           <form>
@@ -78,11 +59,14 @@ function temperatureFin (e) {
         <p>{nameCountry.consolidated_weather?.[0].weather_state_name}</p>
         <p>{showDate}</p>
         <img src={`https://www.metaweather.com/static/img/weather/${nameCountry.consolidated_weather?.[0].weather_state_abbr}.svg`} />
-        <p>{celcuis}{'\u00b0'}</p>
+         {
+           isFahrentheint ? <p>{(((Math.round(nameCountry.consolidated_weather?.[0].the_temp)) * 9 / 5) + 32)}{'\u00b0'}F</p> : 
+           <p>{Math.round(nameCountry.consolidated_weather?.[0].the_temp)}{'\u00b0'}C</p>
+         }
         <p>{showDate}</p>
       </div>
       <div className="weather">
-        <OtherWeather />
+        <OtherWeather isFahrentheint={isFahrentheint} />
         <WeatherDetail />
       </div>
     </div>
