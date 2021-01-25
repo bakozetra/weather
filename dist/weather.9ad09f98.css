@@ -1,6 +1,5 @@
 body {
   color: white;
-  background: #100e1d;
   width: 100%;
   margin: 0;
 }
@@ -14,8 +13,7 @@ img {
   gap: 2rem;
 }
 .dayWeather div {
-  width: 120px;
-  height: 177px;
+  width: 138px;
   background: #1e213a;
   display: flex;
   flex-direction: column;
@@ -29,16 +27,13 @@ img {
   justify-content: space-around;
   align-items: center;
 }
-.covert {
-  position: absolute;
-  top: 1rem;
-  right: 2rem;
-}
+
 
 .container {
-  display: flex;
-  flex-direction: column;
-}
+  display: grid;
+  grid-template-areas: " ";
+  background: #100e1d;
+}   
 .search {
   grid-area: search;
   background: #1e213a;
@@ -46,7 +41,6 @@ img {
 .dayToday {
   background: #1e213a;
   width: 40%;
-  height: 600px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -67,11 +61,12 @@ img {
   grid-area: detail;
   display: flex;
   flex-wrap: wrap;
-  gap: 2rem;
+  gap: 48px;
   background: #100e1d;
 }
 .WeatherDetail article {
-  width: 290px;
+  width: 328px; 
+  height: 204px;
   background: #1e213a;
 }
 article p {
@@ -85,24 +80,109 @@ article p + p {
 article {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
 }
-
+/* 
 #root {
   padding-top: 4rem;
-}
+} */
 
 
 @media (min-width: 700px) {
   .container {
     display: flex;
     flex-direction:row;
+    justify-content: space-between;
+    position: relative;
   }
   .dayWeather {
+    margin-top: 8rem;
     display: flex;
     gap: 15px;
     flex-wrap: nowrap;
+    
+  }
+  .dayToday {
+    width: 30%;
+  }
+  .weather {
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    display:  flex;
+    flex-direction: column;
+    position: relative;
+    gap : 2rem;
+  }
+  .covert{
+    position: absolute;
+    top : 2rem;
+    right: 2rem;
+    margin-bottom: 75px;
+  } 
+  .covert button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #E7E7EB;
+    color:rgba(17, 14, 60, 1);
+    font-size: 18px;
+    font-weight: 700px;
+    ;
+  }
+  .WeatherDetail {
+    display: grid;
+    grid-template-areas: " wind  humid"
+                         " visibility air";
+
+    text-align: center;
+  }
+  .label_seacrh {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 459px;
+   height: 1023px;
+   background: rgba(30, 33, 58, 1);
+   opacity: 1;
+   display: block;
+   padding-top: 4rem;
+  }
+  .close {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+  }
+  .label_seacrh input {
+    width: 268px;
+    height: 48px;
+    background: rgba(30, 33, 58, 1);
+    margin-right: 1rem;
+    text-align: center;
+    margin-left: 2rem;
+    margin-bottom: 2rem;
+  }
+  .label_seacrh input + button {
+    background: rgba(60, 71, 233, 1);
+    width: 86px;
+    height: 48px;
+    color: white;
+  }
+  .name_country button{
+    width: 367px;
+    height: 64px;
+    margin-left: 46px;
+    margin-right: 46px;
+    background: rgba(30, 33, 58, 1);
+    margin-bottom: 30px;
+    color: white;
+  }
+  .search_place {
+    width: 161px;
+    height: 40px;
+    position: absolute;
+    top: 2rem;
+    left: 1rem;
   }
   }
 
