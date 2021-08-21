@@ -1,13 +1,13 @@
-import React, { createContext , useState , useEffect} from 'react'
+import React, { createContext, useState, useEffect } from 'react'
 
 const Context = createContext();
 const URL = `https://cors-anywhere.herokuapp.com/https://www.metaweather.com/api/location/search/?query=`
 
-function ContextProvider({children}) {
+function ContextProvider({ children }) {
   const [nameCountry, setNameCountry] = useState([]);
-  const [city , setCity] = useState([]);
+  const [city, setCity] = useState([]);
   const [name, setName] = useState("london");
-  
+
   const fetchData = async (country) => {
     const Api = `${URL}${country}`;
     const res = await fetch(Api);
@@ -32,8 +32,8 @@ function ContextProvider({children}) {
     fetchApi()
   }, [])
 
-  return <Context.Provider value = {{setNameCountry , nameCountry , name , setName , fetchData , city , setCity , fetchApi}}>
+  return <Context.Provider value={{ setNameCountry, nameCountry, name, setName, fetchData, city, setCity, fetchApi }}>
     {children}
   </Context.Provider>
 }
-export { Context, ContextProvider}
+export { Context, ContextProvider }

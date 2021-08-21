@@ -11,7 +11,6 @@ function Country(city) {
  
   return (
     <div>
-      
     </div>
   )
 
