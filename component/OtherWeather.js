@@ -51,11 +51,13 @@ function OtherWeather({ isFahrentheint }) {
   return (
     <WrapperWeather className="dayWeather">
       {
-        nameCountry.consolidated_weather?.slice(1).map(degree => {
-          var mydate = new Date(degree.applicable_date);
-          const dates = mydate.toDateString();
+        nameCountry.consolidated_weather?.slice(1).map((degree, index) => {
+          const mydate = new Date(degree.applicable_date);
+          const dates = mydate.toDateString().split(' ').splice(0, 3);
+          const DateAfterTom = `${dates[0]}, ${dates[2]}  ${dates[1]}`
+          const dateWeather = index === 0 ? "Tommorow" : DateAfterTom
           return <WeatherDate>
-            <p>{dates}</p>
+            <p>{dateWeather}</p>
             <img src={`https://www.metaweather.com/static/img/weather/${degree.weather_state_abbr}.svg`} />
             <div>
               {isFahrentheint ?
